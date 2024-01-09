@@ -3,8 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import sklearn.metrics as sm
-from sklearn import datasets
+from sklearn import datasets, preprocessing
 from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
 
 l1 = [0,1,2]
 def rename(s):
@@ -64,9 +65,6 @@ model.fit(X)
 # Set the size of the plot
 plt.figure(figsize=(14,7))
 
-# Create a colormap
-colormap = np.array(['red', 'lime', 'black'])
-
 # Plot the Original Classifications
 plt.subplot(1,2,1)
 plt.scatter(X.Petal_Length, X.Petal_Width, c=colormap[y.Targets], s=40)
@@ -86,15 +84,11 @@ print("Confusion Matrix for KMeans is \n",sm.confusion_matrix(y, km))
 #The GaussianMixture scikit-learn class can be used to model this problem 
 #and estimate the parameters of the distributions using the expectation-maximization algorithm.
 
-from sklearn import preprocessing
-
 scaler = preprocessing.StandardScaler()
 scaler.fit(X)
 xsa = scaler.transform(X)
 xs = pd.DataFrame(xsa, columns = X.columns)
 print("\n",xs.sample(5))
-
-from sklearn.mixture import GaussianMixture
 
 gmm = GaussianMixture(n_components=3)
 gmm.fit(xs)
